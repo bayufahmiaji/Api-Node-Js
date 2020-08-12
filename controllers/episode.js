@@ -6,8 +6,8 @@ module.exports.postAddEpisode = (req, res) => {
     //deklarasi value
     let name = req.body.name;
     let anime = req.body.anime;
+    let eps = req.body.eps;
     let realesed = req.body.realesed;
-    let episode = req.body.episode;
     let video = req.body.video;
 
 
@@ -15,12 +15,12 @@ module.exports.postAddEpisode = (req, res) => {
     Episode.findOne({ where: { name: name } })
         .then(episode => {
             //input episode
-            Episode.create({ name: name, anime: anime, episode: episode, realesed: realesed, video:video});
+            Episode.create({ name: name, anime: anime, episode: eps, realesed: realesed, video:video});
             //update episode
-            updateAnime(anime,episode);
+            updateAnime(anime,eps);
 
         }).then(updateEpisode => {
-            res.send({'status': 200, 'data': updateEpisode});
+            res.send({'status': 200, 'data': {'episode':"Episode Inserted",'anime':"anime episode updated"}});
         }).catch((error) => {
             throw new Error(error);
         });
@@ -32,7 +32,7 @@ module.exports.postUpdateEpisode = (req, res) => {
     let name = req.body.name;
     let anime = req.body.anime;
     let realesed = req.body.realesed;
-    let episode = req.body.episode;
+    let eps = req.body.eps;
     let video = req.body.video;
 
 
@@ -40,7 +40,7 @@ module.exports.postUpdateEpisode = (req, res) => {
     Episode.findOne({ where: { name: name } })
         .then(episode => {
             return Episode.update({
-                name: name, anime: anime, episode: episode, realesed: realesed, video:video,
+                name: name, anime: anime, episode: eps, realesed: realesed, video:video,
             }, {
                 where: {
                     name: name,
@@ -48,7 +48,7 @@ module.exports.postUpdateEpisode = (req, res) => {
             });
 
         }).then(updateEpisode => {
-            res.send({'status': 200, 'data': updateEpisode});
+            res.send({'status': 200, 'data': "episode updated"});
         }).catch((error) => {
             throw new Error(error);
         });
